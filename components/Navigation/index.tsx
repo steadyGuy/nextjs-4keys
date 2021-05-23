@@ -50,7 +50,7 @@ export const Navigation = () => {
             'Главная': '/', 'Отзывы': '/o', 'О проекте': '/about', 'Обратная связь': '/svan', 'Гарантии': '/guaranti'
           })
             .map((item, i) => {
-              return (<Link href={item[1]} key={btoa(Math.random().toString() + i)}>
+              return (<Link href={item[1]} key={(Math.random().toString() + i).toString()}>
                 <a className={clsx(router.pathname === item[1] && styles.active)}>{item[0]}</a>
               </Link>);
             })}
