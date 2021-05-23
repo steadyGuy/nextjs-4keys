@@ -1,0 +1,39 @@
+.comment {
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: 30px;
+  display: flex;
+  padding: 0 20px;
+  padding-top: 20px;
+  padding-bottom: 32px;
+  border-radius: 5px;
+
+  &__itemImage {
+    width: 70px;
+    height: 70px;
+    flex-shrink: 0;
+    background-size: cover !important;
+    background-position: center center !important;
+    border-radius: 100%;
+  }
+
+  &__itemData {
+    width: 100%;
+    margin-left: 14px;
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  &__userAndTime {
+    color: #999999;
+    font-weight: 500;
+    margin-top: 20px;
+  }
+
+  &__text {
+    margin-top: 8px;
+    color: #555555;
+  }
+}

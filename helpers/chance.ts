@@ -1,0 +1,9 @@
+export const ItemChance = {
+  GREY: 0.56999,
+  LIGHTBLUE: 0.70923,
+  BLUE: 0.7992327,
+  PURPLE: 0.9590792,
+  PINK: 0.9910485,
+  RED: 0.9974424,
+  GOLD: 0.56999,
+};

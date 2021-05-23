@@ -1,0 +1,21 @@
+.slider {
+  display: flex;
+  animation: lineanim 4.1s; // 2000
+  animation-fill-mode: forwards;
+
+  & > div {
+    margin-left: 5px;
+  }
+}
+
+@import '../../resources/functions';
+
+@keyframes lineanim {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-#{randomNum(2900, 3000)}px);
+  }
+}

@@ -1,0 +1,73 @@
+.caseOpeningSection {
+  // padding-top: 2rem;
+  background: $backgroundColor;
+  // box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.75);
+  // margin-bottom: 500px;
+
+  &__headWrap {
+    width: 101%;
+    transform: translateX(-0.5%);
+    // background: #10161b;
+    // box-shadow: 0px 0px 11px 1px rgba(0, 0, 0, 0.75);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  h2 {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 28px;
+    margin-bottom: 24px;
+  }
+}
+
+.middleLine {
+  background: $primaryColorDarken;
+  height: 120%;
+  position: absolute;
+  left: 50%;
+  width: 4px;
+  transform: translateX(-50%);
+  top: -10%;
+  margin: 0;
+  z-index: 12;
+  border: none;
+}
+
+.caseOpenerBg {
+  width: 99%;
+  position: relative;
+  padding: 0px 2px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 106%;
+    left: 49%;
+    width: 24px;
+    height: 24px;
+    border-radius: 100%;
+    background-color: $primaryColorDarken;
+  }
+}
+
+.caseOpener {
+  width: 100%;
+  // height: 102px;
+  overflow: hidden;
+  position: relative;
+}
+
+.demo {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+  text-transform: uppercase;
+  font-size: 15px;
+
+  &__switch {
+    margin-left: 20px;
+  }
+}

@@ -1,0 +1,17 @@
+.unlockingContainerNotification {
+  height: 54px;
+  width: 460px;
+  display: flex;
+  justify-content: center;
+  background: #ededed;
+  align-items: center;
+  margin: 0 auto;
+  margin-top: 67px; // 43px длина
+  border-radius: 5px;
+
+  span {
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $textColor;
+  }
+}

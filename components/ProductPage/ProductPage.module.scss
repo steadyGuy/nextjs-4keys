@@ -1,0 +1,196 @@
+.product {
+  display: grid;
+  grid-template-columns: 4fr 8fr;
+  grid-template-rows: 1fr;
+  gap: 0px 30px;
+  grid-template-areas: '. .';
+  margin-top: 36px;
+  // margin-bottom: 72px;
+
+  &__image {
+    position: relative;
+    max-height: 450px;
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+    }
+    &::before {
+      content: '';
+      position: absolute;
+      border-radius: 5px;
+      width: 100%;
+      height: 100%;
+      opacity: 0.1;
+      background-color: $primaryColor;
+    }
+  }
+}
+
+.content {
+  &__breadcrumbs {
+    display: flex;
+    list-style-type: none;
+    text-transform: uppercase;
+    font-size: 13px;
+    margin-top: 8px;
+    line-height: 140.6%;
+    > li {
+      cursor: pointer;
+      &:last-of-type {
+        color: #5e5e5e;
+      }
+    }
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    span {
+      margin-left: 9px;
+      margin-right: 7px;
+    }
+  }
+
+  > h1 {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 8px;
+  }
+
+  &__list {
+    margin-top: 18px;
+    list-style-type: none;
+    display: flex;
+
+    > li {
+      margin-left: 34px;
+
+      b {
+        display: block;
+        margin-top: 4px;
+        font-weight: 500;
+      }
+
+      &:first-of-type {
+        margin-left: 0;
+      }
+    }
+  }
+
+  &__price {
+    font-size: 28px;
+    display: block;
+    font-weight: bold;
+    margin-top: 22px;
+    margin-bottom: 13px;
+  }
+
+  &__button {
+    width: 240px;
+    height: 47px;
+    text-transform: uppercase;
+  }
+
+  &__description {
+    margin-top: 32px;
+    font-weight: 300;
+    line-height: 140.6%;
+    ul,
+    ol {
+      padding-left: 25px;
+    }
+    > h3 {
+      font-size: 20px;
+      margin-bottom: 14px;
+      font-weight: 300;
+    }
+  }
+}
+
+.otherGames {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr 3fr;
+  grid-template-rows: 1fr;
+  gap: 0px 30px;
+  grid-template-areas: '. . . .';
+}
+.otherGamesSection {
+  h2 {
+    margin-bottom: 10px;
+  }
+}
+
+.comments {
+  background-color: #f4f4f4;
+  margin-top: 40px;
+  padding-top: 32px;
+  padding-bottom: 30px;
+
+  &__title {
+    text-transform: uppercase;
+    font-size: 28px;
+    text-align: center;
+    span {
+      color: #b6b6b6;
+    }
+  }
+
+  &__wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 30px;
+    grid-template-areas: '. .';
+  }
+
+  &__button {
+    text-transform: uppercase;
+    color: #999999;
+    margin: 0 auto;
+    margin-top: 30px;
+    padding: 14px 28px;
+    &:hover {
+      color: $textColor;
+    }
+  }
+
+  &__sender {
+    background-color: #fff;
+    padding: 24px 20px;
+    border-radius: 5px;
+    margin-top: 30px;
+
+    h4 {
+      text-transform: uppercase;
+      color: $textColor;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    textarea {
+      margin-top: 20px;
+      resize: none;
+      width: 100%;
+      height: 200px;
+      border: none;
+      border-radius: 5px;
+      background-color: #f4f4f4;
+      box-sizing: border-box;
+      padding: 20px 10px 10px 20px;
+      color: #999999;
+      font-size: 16px;
+    }
+  }
+
+  &__senderBottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 28px;
+    button {
+      text-transform: uppercase;
+      padding: 11px 50px;
+    }
+  }
+}

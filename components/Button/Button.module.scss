@@ -1,0 +1,37 @@
+.button {
+  font-weight: 500;
+  font-size: 15px;
+  border-radius: 46px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 7px 24px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: $textColor;
+  border: solid 2px $primaryColor;
+  img {
+    margin-left: 24px;
+  }
+
+  &:active {
+    position: relative;
+    top: 1px;
+  }
+}
+
+.filled {
+  background-color: $primaryColor;
+
+  &:hover {
+    background-color: transparent;
+  }
+}
+
+.bordered {
+  background-color: transparent;
+
+  &:hover {
+    background-color: $primaryColor;
+  }
+}

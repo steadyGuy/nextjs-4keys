@@ -1,0 +1,23 @@
+.advantages {
+  display: grid;
+  grid-template-columns: 3fr 3fr 3fr;
+  grid-template-rows: 1fr;
+  gap: 0px 30px;
+  grid-template-areas: '. . .';
+  margin-top: 36px;
+  margin-bottom: 72px;
+}
+
+.box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  > p {
+    margin-left: 20px;
+  }
+
+  span {
+    font-weight: bold;
+  }
+}
