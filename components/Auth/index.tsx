@@ -1,7 +1,7 @@
 import { setCookie } from 'nookies';
 import React, { useContext, useState } from 'react'
 import { UserApi } from '../../api/UserApi';
-import { AUTH, signin, signup } from '../../store/actions';
+import { AUTH } from '../../store/actions';
 import { StoreContext } from '../../store/GlobalState';
 import { Button } from '../Button';
 import { Dialog } from '../Dialog';

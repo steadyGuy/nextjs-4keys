@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React, { useContext } from 'react'
-import { AUTH, LOGOUT } from '../../../store/actions';
+import { LOGOUT } from '../../../store/actions';
 import { StoreContext } from '../../../store/GlobalState';
 
 import styles from './TopUserData.module.scss';
