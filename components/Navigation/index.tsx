@@ -34,7 +34,7 @@ export const Navigation = () => {
 
   useEffect(() => {
     window.addEventListener("message", event => {
-      if (event.origin !== 'https://nestjsspecial.herokuapp.com/') return;
+      if (event.origin !== 'https://nestjsspecial.herokuapp.com') return;
       const user = event.data;
       dispatch({ type: AUTH, payload: user });
       setUser(JSON.parse(localStorage.getItem('user')));
