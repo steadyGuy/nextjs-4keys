@@ -16,13 +16,23 @@
     top: 5px;
     box-shadow: none;
     .item__wrapper {
+      text-align: center;
       background: rgba(29, 29, 29, 0.8);
       opacity: 1;
     }
   }
 
-  &__topIcon {
+  &__topIconWrapper {
     position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    top: 12px;
+    left: 12px;
+  }
+
+  &__topIcon {
     width: 32px;
     height: 32px;
     background-color: $backgroundColor;
@@ -30,8 +40,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    top: 12px;
-    left: 12px;
+    &:last-of-type {
+      margin-top: 6px;
+    }
   }
 
   &__blockFilled {

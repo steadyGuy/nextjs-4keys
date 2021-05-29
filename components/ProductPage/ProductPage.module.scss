@@ -106,6 +106,10 @@
       font-weight: 300;
     }
   }
+  &__outOfStock {
+    color: #f82929;
+    font-size: 18px;
+  }
 }
 
 .otherGames {
@@ -134,6 +138,16 @@
     span {
       color: #b6b6b6;
     }
+  }
+
+  &__titleSpecial {
+    margin: 60px auto;
+    text-align: center;
+    text-transform: uppercase;
+    color: #b6b6b6;
+    font-size: 22px;
+    line-height: 30px;
+    width: 540px;
   }
 
   &__wrapper {
@@ -192,5 +206,78 @@
       text-transform: uppercase;
       padding: 11px 50px;
     }
+  }
+}
+
+.emailDialog {
+  display: flex;
+  flex-direction: column;
+  label {
+    font-size: 18px;
+    font-weight: 300;
+    margin-top: 24px;
+    margin-bottom: 12px;
+  }
+  input {
+    width: 80%;
+    height: 46px;
+  }
+  button {
+    border-radius: 25px;
+    height: 46px;
+    width: 40%;
+    left: 0;
+    margin-top: 12px;
+    margin-bottom: 12px;
+  }
+  span {
+    margin-bottom: 38px;
+  }
+}
+
+.dialogChoose {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  &__wrapper {
+    display: flex;
+    margin: 36px 0;
+    cursor: pointer;
+    justify-content: center;
+  }
+
+  &__item {
+    position: relative;
+    top: 0;
+    transition: all 0.2s;
+    background: #fff;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    &:last-of-type {
+      margin-left: 40px;
+    }
+    &:first-of-type {
+      margin-left: 0;
+    }
+    &:hover {
+      top: 8px;
+      background-color: $primaryColor;
+    }
+    img {
+      width: 65px;
+      height: 65px;
+    }
+  }
+  &__active {
+    background-color: $primaryColor !important;
+    top: 8px;
+  }
+  &__button {
+    margin: 24px auto;
+    margin-bottom: 48px;
   }
 }

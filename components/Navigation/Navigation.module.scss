@@ -1,5 +1,7 @@
 .bordered {
   border-bottom: solid 1px #e8e8e8;
+  width: 100%;
+  display: flex;
 }
 
 .wrapper {
@@ -10,6 +12,7 @@
   grid-template-areas: '. . .';
   height: 86px;
   align-items: center;
+  padding: 0 10px;
 }
 
 .logo {
@@ -20,7 +23,9 @@
 
 .navigation {
   display: flex;
-  a {
+  > a,
+  > span {
+    cursor: pointer;
     display: inline-block;
     margin-left: 20px;
     font-size: 15px;
@@ -29,15 +34,9 @@
     border-bottom: solid 3px $backgroundColor;
     color: $textColor;
     transition: 0.2s ease-in-out;
-    &:first-of-type {
-      margin-left: 0;
-    }
     &:hover {
       border-bottom: solid 3px $primaryColor;
     }
-  }
-  .active {
-    border-bottom: solid 3px $primaryColor;
   }
 }
 
@@ -69,16 +68,63 @@
   }
 }
 
+.hiddenLg {
+  display: none;
+}
+
+.navShow {
+  top: 0;
+}
+
 @media (max-width: 768px) {
-  .navContainer {
-    color: red;
+  .hiddenLg {
+    display: block;
+  }
+  .bordered {
+    position: fixed;
+    z-index: 100;
+    background-color: #fff;
+  }
+  .navigation {
+    // top: -9999px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: green;
+    left: 0;
+    top: 87px;
+    flex-direction: column;
+    z-index: 100;
+    text-align: center;
+    > a,
+    > span {
+      display: block;
+      border: none;
+      cursor: pointer;
+      margin-left: 0;
+      font-size: 16px;
+      // padding-bottom: 8px;
+      // padding-top: 6px;
+      color: $textColor;
+    }
   }
 }
 
 @media (max-width: 992px) {
-  .navContainer {
-    color: red;
+  .wrapper {
+    grid-template-columns: 12fr 5fr 7fr;
   }
+
+  .logo {
+    margin: 0;
+    justify-content: flex-start;
+  }
+  // .btnsRight {
+  //   width: 400px;
+  // }
+  // .navigation {
+  //   width: 400px;
+  // }
 }
 
 @media (max-width: 1200) {

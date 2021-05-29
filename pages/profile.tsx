@@ -3,13 +3,14 @@ import Head from 'next/head';
 import { ProfilePage } from '../components/ProfilePage';
 import { UserApi } from '../api/UserApi';
 
-const MyProfile = ({ user }) => {
+const MyProfile = ({ user, orders }) => {
+  console.log('useruseruseruseruseruseruseruseruseruser', user)
   return (
     <div>
       <Head>
         <title>Привет, мир!</title>
       </Head>
-      <ProfilePage user={user} />
+      <ProfilePage user={user} orders={orders} />
     </div>
   );
 };
@@ -17,7 +18,9 @@ const MyProfile = ({ user }) => {
 export async function getServerSideProps(ctx) {
 
   const user = await UserApi().getMe(ctx);
-
+  const orders = await UserApi().orders(ctx);
+  console.log('orders', orders)
+  console.log('useruseruser', user)
   if (!user) {
     return {
       redirect: {
@@ -27,8 +30,14 @@ export async function getServerSideProps(ctx) {
     }
   }
 
+  if (!orders) {
+    return {
+      props: { user, orders: [] },
+    }
+  }
+
   return {
-    props: { user }, // will be passed to the page component as props
+    props: { user, orders }, // will be passed to the page component as props
   }
 }
 

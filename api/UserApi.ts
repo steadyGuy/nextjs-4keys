@@ -9,7 +9,7 @@ export const UserApi = () => {
         const { data } = await axios.get('/auth/me', {
           headers: {
             Authorization: 'Bearer ' + nookies.get(ctx)?.auth_token,
-          }
+          },
         });
         return data;
       } catch (error) {
@@ -30,6 +30,17 @@ export const UserApi = () => {
           console.log('Error with auth request', error.message);
       }
     },
+    comment: async (productId: number, description: string): Promise<any> => {
+      try {
+        const { data } = await axios.post('/reviews/create', { productId, description });
+        return data;
+      } catch (error) {
+        if (error.response) {
+          return error.response.data;
+        } else
+          console.log('Error with auth request', error.message);
+      }
+    },
     updateEmail: async (email: string): Promise<any> => {
       try {
         const { data } = await axios.post('/auth/update-email', { email });
@@ -37,6 +48,17 @@ export const UserApi = () => {
       } catch (error) {
         if (error.response) {
           return error.response.data;
+        } else
+          console.log('Error with auth request', error.message);
+      }
+    },
+    getBalance: async (): Promise<any> => {
+      try {
+        const { data } = await axios.get('/auth/balance');
+        return data;
+      } catch (error) {
+        if (error.response) {
+          return null;
         } else
           console.log('Error with auth request', error.message);
       }
@@ -51,6 +73,21 @@ export const UserApi = () => {
         } else
           console.log('Error with auth request', error.message);
       }
-    }
+    },
+    orders: async (ctx): Promise<any> => {
+      try {
+        const { data } = await axios.get('/auth/orders', {
+          headers: {
+            Authorization: 'Bearer ' + nookies.get(ctx)?.auth_token,
+          },
+        });
+        return data;
+      } catch (error) {
+        if (error.response) {
+          return null;
+        } else
+          console.log('Error with auth request', error)
+      }
+    },
   }
 };

@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import Link from 'next/link';
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
+import { AboutUsDialog } from '../AboutUsDialog';
 
 import styles from './Footer.module.scss';
 
@@ -10,6 +11,7 @@ interface FooterProps {
 }
 
 export const Footer: FC<FooterProps> = ({ }) => {
+  const [aboutUs, setAboutUs] = useState(false);
   return (
     <footer className={styles.footer}>
       <div className={clsx(styles.footer__wrapper, "container")}>
@@ -25,17 +27,17 @@ export const Footer: FC<FooterProps> = ({ }) => {
         </div>
         <div className={styles.footer__lists}>
           <ul>
-            <li><Link href="/"><a>Новые продукты</a></Link></li>
+            {/* <li><Link href="/"><a>Последние поступления</a></Link></li> */}
             <li><Link href="/"><a>Контакты</a></Link></li>
-            <li><Link href="/"><a>Оплата & доставка</a></Link></li>
-            <li><Link href="/about"><a>О нас</a></Link></li>
-            <li><Link href="/"><a>Другое</a></Link></li>
+            <AboutUsDialog openDialog={aboutUs} setOpenDialog={setAboutUs} />
+            <li onClick={() => setAboutUs(true)}>О проекте</li>
+            {/* <li><Link href="/"><a>Другое</a></Link></li> */}
           </ul>
           <ul>
-            <li><Link href="/"><a>Мои заказы</a></Link></li>
-            <li><Link href="/cart"><a>Корзина</a></Link></li>
-            <li><Link href="/"><a>Мой кабинет</a></Link></li>
-            <li><Link href="/"><a>Мои возвраты</a></Link></li>
+            <li><Link href="/profile"><a>Мои покупки</a></Link></li>
+            <li><Link href="/cart"><a>Гарантии</a></Link></li>
+            <li><Link href="/profile"><a>Мой кабинет</a></Link></li>
+            {/* <li><Link href="/"><a>Мои возвраты</a></Link></li> */}
           </ul>
         </div>
         <div className={styles.footer__paymentMethods}>

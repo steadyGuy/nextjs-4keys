@@ -1,5 +1,4 @@
-import { setCookie } from 'nookies';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserApi } from '../../api/UserApi';
 import { AUTH } from '../../store/actions';
 import { StoreContext } from '../../store/GlobalState';
@@ -112,7 +111,7 @@ export const Auth = ({ isSignUp, setIsSignUp, openDialog, setOpenDialog, setUser
         </Button>
 
         <span className={styles.register__alreadyAuth} onClick={switchMode}>
-          {isSignUp ? 'Еще нет аккаунта? Зарегистрируйтесь' : 'Уже есть аккаунт? Войти'}
+          {isSignUp ? 'Уже есть аккаунт? Войти' : 'Еще нет аккаунта? Зарегистрируйтесь'}
         </span>
       </form>
     </Dialog>

@@ -58,6 +58,10 @@ a {
   animation: 0.5s spin infinite linear;
 }
 
+.hidden {
+  display: none !important;
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);

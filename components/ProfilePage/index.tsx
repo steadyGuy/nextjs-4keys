@@ -1,24 +1,20 @@
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { UserApi } from '../../api/UserApi';
+import { StoreContext } from '../../store/GlobalState';
 import { Button } from '../Button';
+import { EmailInput } from '../EmailInput';
+import { PaymentDialog } from '../PaymentDialog';
 
 import styles from './ProfilePage.module.scss';
+import { Table } from './Table';
 
 // ОБЯЗАТЕЛЬНО РЕАЛИЗОВАТЬ ПРОВЕРКУ EMAIL ЧЕРЕЗ ПОШТУ
 
-export const ProfilePage = ({ user }) => {
-  const [userEmail, setUserEmail] = useState(user.email);
-  const [emailError, setEmailError] = useState(null)
+export const ProfilePage = ({ user, orders }) => {
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const { email, message } = await UserApi().updateEmail(userEmail);
-    if (message) {
-      return setEmailError(message);
-    }
-    setUserEmail(email);
-  }
+  const [openPayment, setOpenPayment] = useState(false);
+  const { state } = useContext(StoreContext)
 
   return (
     <div className="container">
@@ -30,33 +26,22 @@ export const ProfilePage = ({ user }) => {
           <span className={styles.profile__id}>id <span>{user.id}</span></span>
           <span className={styles.profile__name}>{user.username}</span>
           <ul className={styles.profile__list}>
-            <li>Покупок <span>{user.orders} шт.</span></li>
+            <li>Покупок <span>{orders.length} шт.</span></li>
             <li>Куплено на суму: <span>{user.wastedBalance} рублей</span></li>
           </ul>
-          <form className={styles.profile__emailSender} onSubmit={handleSubmit}>
-            <label htmlFor="email">Ваша почта</label>
-            <input
-              onChange={(e) => setUserEmail(e.target.value)}
-              type="email"
-              id="email"
-              placeholder="E-Mail"
-              name="email"
-              value={userEmail}
-            />
-            <button type="submit">Ок</button>
-          </form>
-          <span className={styles.profile__errorMsg}>{emailError}</span>
+          <EmailInput email={user.email} />
         </div>
         <div className={styles.profile__balance}>
-          <h3>{user.balance} ₽</h3>
-          <Button type="filled" className={styles.button}>Пополнить баланс</Button>
+          <h3>{state.auth?.balance ? state.auth.balance : user.balance} ₽</h3>
+          {openPayment && <PaymentDialog openDialog={openPayment} setOpenDialog={setOpenPayment} />}
+          <Button type="filled" className={styles.button} clickHandler={() => setOpenPayment(true)}>Пополнить баланс</Button>
         </div>
       </div>
       <div className={styles.content}>
-        {user.orders === 0 ? <h1>У вас ещё нет покупок</h1> : <span>Есть покупки, но нужно их вывести</span>}
+        {orders.length === 0 ? <h1 className={styles.content__titleEmpty}>У вас ещё нет покупок</h1> : <Table orders={orders} />}
 
       </div>
-    </div>
+    </div >
   )
 }
 

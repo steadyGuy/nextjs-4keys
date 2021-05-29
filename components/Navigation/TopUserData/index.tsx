@@ -1,8 +1,9 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { LOGOUT } from '../../../store/actions';
 import { StoreContext } from '../../../store/GlobalState';
+import { PaymentDialog } from '../../PaymentDialog';
 
 import styles from './TopUserData.module.scss';
 
@@ -22,10 +23,18 @@ export const TopUserData = ({ user, setUser }) => {
       }
     }
   }
+
+  const [openPayment, setOpenPayment] = useState(false);
+
+  const handleOpenPaymentDialog = () => {
+    setOpenPayment(true);
+  }
+
   return (
     <div className={styles.userData}>
+      {openPayment && <PaymentDialog openDialog={openPayment} setOpenDialog={setOpenPayment} />}
       <div className={styles.userData__balance}>{user.balance} руб.</div>
-      <div className={styles.userData__btnAdd}>+</div>
+      <div className={styles.userData__btnAdd} onClick={handleOpenPaymentDialog}>+</div>
       <Link href="/profile">
         <a onClick={handleLogOut}>
           <div className={styles.userData__userImage} style={{ background: `url(${user.image})`, backgroundSize: "cover" }}>

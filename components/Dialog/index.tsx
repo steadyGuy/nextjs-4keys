@@ -54,7 +54,7 @@ export const Dialog = ({ isOpen, onClose, modalClass = null, modalSize = null, i
       onTransitionEnd={transitionEnd}
     >
       <div className={styles.boxDialog}>
-        <img onClick={handleClick} src="./static/close.svg" alt="Close" className={styles.close} />
+        <img onClick={handleClick} src="/static/close.svg" alt="Close" className={styles.close} />
         <div className={styles.boxHeader}>
           <h4 className={styles.boxTitle}>{title}</h4>
         </div>

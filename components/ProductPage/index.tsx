@@ -1,91 +1,209 @@
 import clsx from 'clsx';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React, { FC, useState } from 'react'
+import { PaymentApi } from '../../api/PaymentApi';
+import { UserApi } from '../../api/UserApi';
+import { IComment } from '../../interfaces/Comment';
 import { Button } from '../Button';
-import { Comment } from '../Comment';
+import { Dialog } from '../Dialog';
+import { EmailInput } from '../EmailInput';
 import { ProductItemBig } from '../ProductItemBig';
 import { SectionWrapper } from '../SectionWrapper';
+import { Comments } from './Comments';
+import { DialogWarning } from './DialogWarning';
 
 import styles from './ProductPage.module.scss';
 
 interface ProductPageProps {
-  // title: string;
-  // className?: string;
+  randomProducts: any;
+  product: any;
+  comments: IComment[];
 }
 
-export const ProductPage: FC<ProductPageProps> = ({ }) => {
+export const ProductPage: FC<ProductPageProps> = ({ randomProducts, product, comments: comm }) => {
+  const router = useRouter();
+  const [openDialog, setOpenDialog] = useState(false);
+  const [dialogtitle, setDialogTitle] = useState('Вы не авторизированы!');
+  const [dialogContent, setDialogContent] = useState('error');
+  const [keyOrAccount, setKeyOrAccount] = useState(product.data.type.keys > 0 ? 'key' : 'account');
+  const [readyToPay, setReadyToPay] = useState(false);
+  const [openInformal, setOpenInformal] = useState(false);
+  const [informalMessage, setInformalMessage] = useState('');
+
+  const handleOnOpenDialog = () => {
+    setOpenDialog(!openDialog);
+  }
+
+  const handleOptions = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+
+    if (!user) {
+      return alert('Вы должны войти или зарегистрироваться для покупки');
+    }
+
+    if (!user?.email && !user?.steamid) {
+      setOpenDialog(true);
+      setDialogContent('error');
+    }
+
+    if (!user?.email) {
+      setDialogTitle('Привяжите ваш email адрес для покупки')
+      setOpenDialog(true);
+      setDialogContent('warning');
+      return;
+    }
+
+    setOpenDialog(false);
+    setReadyToPay(true);
+
+  }
+
+  const handleInformalMessage = () => {
+    setOpenInformal(false);
+    router.reload();
+  }
+
+  const handlePayment = async () => {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const confirmationPayment = confirm(`C вашего баланса будет снято ${product.data.price} ₽. Вы уверены что хотите купить этот предмет?`);
+    let data = { message: 'Вы отменили покупку' };
+    if (confirmationPayment) {
+      data = await PaymentApi().execute(user.email, product.data.id, keyOrAccount);
+    }
+    setReadyToPay(false);
+    setOpenInformal(true);
+    let userLocalS = JSON.parse(localStorage.getItem('user'));
+    userLocalS.balance = await UserApi().getBalance();
+    localStorage.setItem('user', JSON.stringify(userLocalS));
+    setInformalMessage(data.message);
+  }
 
   return (
     <>
+      {
+        openDialog &&
+        <DialogWarning title={dialogtitle} openDialog={openDialog} handleOnOpenDialog={handleOnOpenDialog}>
+          {dialogContent === 'error' ?
+            <b className="mt-30 mb-50 d-flex" style={{ color: '#EF3F3F', textAlign: 'center', lineHeight: '24px' }}>Для открытия кейса / покупки товара необходима авторизация.</b> :
+            <EmailInput email='' className={styles.emailDialog} />}
+        </DialogWarning>
+      }
+
+      {
+        openInformal &&
+        <Dialog
+          id='choose_type'
+          isOpen={openInformal}
+          onClose={() => setOpenInformal(!openInformal)}
+          title={'Уведомление'}
+        >
+
+          <div className={styles.dialogChoose}>
+            <div className={styles.dialogChoose__wrapper}>
+
+              <b style={{ color: '#EF3F3F', textAlign: 'center', lineHeight: '24px' }}>
+                {informalMessage}
+              </b>
+
+            </div>
+            <Button
+              type="filled"
+              className={clsx(styles.content__button, styles.dialogChoose__button)}
+              clickHandler={handleInformalMessage}>
+              Хорошо
+            </Button>
+          </div>
+
+        </Dialog>
+      }
+
+      {
+        readyToPay &&
+        <Dialog
+          id='choose_type'
+          isOpen={readyToPay}
+          onClose={() => setReadyToPay(!readyToPay)}
+          title={'Выберите ключ или аккаунт'}
+        >
+
+          <div className={styles.dialogChoose}>
+            <div className={styles.dialogChoose__wrapper}>
+
+              {product.data.type.keys > 0 &&
+                <div
+                  className={clsx(styles.dialogChoose__item, keyOrAccount === 'key' && styles.dialogChoose__active)}
+                  onClick={() => setKeyOrAccount('key')}
+                >
+                  <img src={`/static/key.svg`} alt={`Ключ}`} />
+                </div>}
+
+              {product.data.type.accounts > 0 &&
+                <div
+                  className={clsx(styles.dialogChoose__item, keyOrAccount === 'account' && styles.dialogChoose__active)}
+                  onClick={() => setKeyOrAccount('account')}
+                >
+                  <img src={`/static/account.svg`} alt={`Аккаунт}`} />
+                </div>}
+            </div>
+            <Button
+              type="filled"
+              className={clsx(styles.content__button, styles.dialogChoose__button)}
+              clickHandler={handlePayment}>
+              Выбрать
+            </Button>
+          </div>
+
+        </Dialog>
+      }
+
       <div className={clsx(styles.product, "container")}>
         <div className={styles.product__image}>
-          <img src="/static/items/example.png" alt="Product image" />
+          <img src={product.data.photo} alt={product.data.title} />
         </div>
         <div className={styles.content}>
           <ul className={styles.content__breadcrumbs}>
             <Link href="/"><a><li>Главная</li></a></Link>
-            <li><span>{'>'}</span>Ключ PUBG</li>
+            <li><span>{'>'}</span>{product.data.title}</li>
           </ul>
-          <h1>Ключ PUBG</h1>
+          <h1>{product.data.title}</h1>
           <ul className={styles.content__list}>
-            <li>Дата выхода: <b>17.04.2024</b></li>
-            <li>Жанр: <b>STRATEGY</b></li>
-            <li>Платформа: <b>STEAM</b></li>
-            <li>Тип: <b>КЛЮЧ</b></li>
+            <li>Дата выхода: <b>{product.data.date}</b></li>
+            <li>Жанр: <b>{product.data.genres.map(genre => genre.name + ' ')}</b></li>
+            <li>Платформа: <b>{product.data.platform?.name}</b></li>
+            <li>Тип: <b>{product.data.type.keys > 0 && 'КЛЮЧ'}{' '}{product.data.type.accounts > 0 && 'АККАУНТ'}</b></li>
             <li></li>
           </ul>
-          <b className={styles.content__price}>599 ₽</b>
-          <Button type="filled" className={styles.content__button}>Купить сейчас</Button>
+          <b className={styles.content__price}>{product.data.price} ₽</b>
+          {
+            product.data.type.keys === 0 && product.data.type.accounts === 0 ?
+              <b className={styles.content__outOfStock}>Нет в наличии</b> :
+              <Button type="filled" className={styles.content__button} clickHandler={handleOptions}>
+                Купить сейчас
+            </Button>
+          }
           <div className={styles.content__description}>
             <h3>Описание</h3>
-            <p>Приобретая данный товар Вы моментально получаете лицензионный аккаунт Minecraft.
-            <br />
-              <br />
-              <b>Minecraft</b> — компьютерная инди-игра в жанре песочницы с элементами симулятора выживания и открытым миром, разработанная шведским программистом Маркусом Перссоном, известным также как «Notch» и позже выпускаемая основанной Перссоном компанией Mojang.
-            <ul>
-                <li> Возможности товара:</li>
-                <li>Возможность играть на Premium серверах</li>
-                <li>Возможность смены ника на аккаунте</li>
-                <li>Возможность смены скина на аккаунте</li>
-                <li>Играть с модами на серверах</li>
-              </ul>
-              <br />
-              <br />
-          Вход осуществляется в официальном лаунчере. (Скачать Лаунчер: http://download.com)
-          Пароль менять запрещено. Гарантия на смену пароля не распространяется.</p>
+            {product.data.description}
           </div>
         </div>
       </div>
       <SectionWrapper title="Другие игры" className={clsx(styles.otherGamesSection, "container")}>
         <div className={styles.otherGames}>
-          <ProductItemBig />
-          <ProductItemBig />
-          <ProductItemBig />
-          <ProductItemBig />
+          {randomProducts.data.map((item, i) => (
+            <ProductItemBig
+              type={item.type}
+              price={item.price}
+              image={item.photo}
+              slug={item.slug}
+              title={item.title}
+              key={Math.random() + i}
+            />
+          ))}
+
         </div>
       </SectionWrapper>
-      <section className={styles.comments}>
-        <div className="container">
-          <h2 className={styles.comments__title}>Комментарии <span>(25)</span></h2>
-          <div className={styles.comments__wrapper}>
-            <Comment />
-            <Comment />
-            <Comment />
-            <Comment />
-          </div>
-          <Button className={styles.comments__button}>
-            Больше комментариев
-          </Button>
-          <form className={styles.comments__sender}>
-            <h4>Ваш комментарий</h4>
-            <textarea name="comment" placeholder="Введите ваш комментария..."></textarea>
-            <div className={styles.comments__senderBottom}>
-              <div className="captacha">Captcha</div>
-              <Button type="filled">Отправить</Button>
-            </div>
-          </form>
-        </div>
-      </section>
+      <Comments comments={comm} product={product.data} />
     </>
   )
 }

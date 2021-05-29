@@ -18,6 +18,12 @@ export const rootReducer = (state, action) => {
       destroyCookie(null, 'auth_token');
       return { ...state, auth: null };
 
+    case actionType.UPDATE_BALANCE:
+      const user = JSON.parse(localStorage.getItem('user'));
+      user.balance += action.payload;
+      localStorage.setItem('user', JSON.stringify(user));
+      return { ...state, auth: { ...user } };
+
     default:
       return state;
   }

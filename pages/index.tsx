@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { ProductsApi } from '../api/ProductsApi';
 import { Advantages } from '../components/Advantages';
 import { CaseOpeningSection } from '../components/CaseOpeningSection';
 import { CasesListSection } from '../components/CasesListSection';
@@ -10,7 +11,7 @@ import { SettingsContextProvider } from '../contexts/SettingsContext';
 import { containerTypes } from "../helpers";
 import { Cases } from '../public/cases';
 
-export default function Home() {
+export default function Home({ products }) {
 
   const [chosenContainerType, setChosenContainerType] = useState(containerTypes[0]);
   const [containerInfo, setContainerInfo] = useState({
@@ -28,7 +29,6 @@ export default function Home() {
       title,
       image,
     });
-    console.log('items', specialItems);
     setItems(items);
     setSpecialItems(specialItems);
   }, [])
@@ -66,7 +66,21 @@ export default function Home() {
           )}
       </SettingsContextProvider>
       <CasesListSection />
-      <ProductsListSection />
+      <ProductsListSection products={products} />
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const products = await ProductsApi().getProducts(12);
+
+  if (!products?.data) {
+    return {
+      props: { products: { data: [] } }, // will be passed to the page component as props
+    }
+  }
+
+  return {
+    props: { products }, // will be passed to the page component as props
+  }
 }
