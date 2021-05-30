@@ -1,4 +1,4 @@
-import nookies from 'nookies';
+import nookies, { parseCookies } from 'nookies';
 import axios from "../core/axios";
 // import { GetServerSidePropsContext } from "next";
 
@@ -32,7 +32,11 @@ export const UserApi = () => {
     },
     comment: async (productId: number, description: string): Promise<any> => {
       try {
-        const { data } = await axios.post('/reviews/create', { productId, description });
+        const { data } = await axios.post('/reviews/create', { productId, description }, {
+          headers: {
+            Authorization: 'Bearer ' + parseCookies()?.auth_token,
+          },
+        });
         return data;
       } catch (error) {
         if (error.response) {
@@ -43,7 +47,11 @@ export const UserApi = () => {
     },
     updateEmail: async (email: string): Promise<any> => {
       try {
-        const { data } = await axios.post('/auth/update-email', { email });
+        const { data } = await axios.post('/auth/update-email', { email }, {
+          headers: {
+            Authorization: 'Bearer ' + parseCookies()?.auth_token,
+          },
+        });
         return data;
       } catch (error) {
         if (error.response) {

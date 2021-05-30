@@ -15,12 +15,11 @@ export const ProfilePage = ({ user, orders }) => {
 
   const [openPayment, setOpenPayment] = useState(false);
   const { state } = useContext(StoreContext)
-
   return (
     <div className="container">
       <div className={styles.profile}>
         <div className={styles.profile__image}
-          style={{ background: `url(${user.image})`, backgroundSize: "cover", backgroundPosition: "center center" }}
+          style={{ background: `url(${user.image || '/static/profile_img.png'})`, backgroundSize: "cover", backgroundPosition: "center center" }}
         />
         <div className={styles.profile__data}>
           <span className={styles.profile__id}>id <span>{user.id}</span></span>

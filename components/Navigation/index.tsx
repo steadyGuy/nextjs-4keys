@@ -35,7 +35,7 @@ export const Navigation = () => {
     if (localStorage.getItem('user')) return;
     let [x, y] = [screen.width / 2 - 500 / 2, screen.height / 2 - 350];
     const popupWindow = window.open(
-      // http://localhost:3000/api
+      // http://localhost:3000
       'https://nestjsspecial.herokuapp.com/api' + "/auth/steam", 'Auth via OpenID', `width=500,height=500,menubar=no,location=no,resizable=no,scrollbars=no,status=no,,left=${x},top=${y}`
     );
     if (window.focus) popupWindow.focus();
@@ -43,8 +43,8 @@ export const Navigation = () => {
 
   useEffect(() => {
     window.addEventListener("message", event => {
-      // https://nestjsspecial.herokuapp.com
-      if (event.origin !== 'http://localhost:3000') return;
+      // http://localhost:3000
+      if (event.origin !== 'https://nestjsspecial.herokuapp.com') return;
       const user = event.data;
       dispatch({ type: AUTH, payload: user });
       setUser(JSON.parse(localStorage.getItem('user')));

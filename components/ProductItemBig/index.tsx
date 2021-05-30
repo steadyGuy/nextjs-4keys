@@ -16,26 +16,26 @@ interface ProductItemProps {
 export const ProductItemBig: FC<ProductItemProps> =
   ({ className, type, title, slug, image, price }) => {
     return (
-      <Link href={`/product/${slug}`}>
-        <a>
-          <div className={clsx(styles.item, className)}>
-            <div className={styles.item__image} style={{ background: `url(${image})`, backgroundSize: "cover" }}>
-              <div className={styles.item__wrapper}>{title}</div>
-              <div className={styles.item__topIconWrapper}>
-                {type.keys > 0 && <div className={styles.item__topIcon}>
-                  <img src={`/static/key.svg`} alt={`Продукт ${type}`} />
-                </div>}
-                {type.accounts > 0 && <div className={styles.item__topIcon}>
-                  <img src={`/static/account.svg`} alt={`Продукт ${type}`} />
-                </div>}
-                {/* <div className={styles.item__topIcon}>
+
+      <a href={`/product/${slug}`}>
+        <div className={clsx(styles.item, className)}>
+          <div className={styles.item__image} style={{ background: `url(${image})`, backgroundSize: "cover" }}>
+            <div className={styles.item__wrapper}>{title}</div>
+            <div className={styles.item__topIconWrapper}>
+              {type.keys > 0 && <div className={styles.item__topIcon}>
+                <img src={`/static/key.svg`} alt={`Продукт ${type}`} />
+              </div>}
+              {type.accounts > 0 && <div className={styles.item__topIcon}>
+                <img src={`/static/account.svg`} alt={`Продукт ${type}`} />
+              </div>}
+              {/* <div className={styles.item__topIcon}>
                   <img src={`/static/account.svg`} alt={`Продукт ${type}`} />
                 </div> */}
-              </div>
-              <div className={styles.item__blockFilled}>{price}₽</div>
             </div>
+            <div className={styles.item__blockFilled}>{price}₽</div>
           </div>
-        </a>
-      </Link>
+        </div>
+      </a>
+
     )
   }

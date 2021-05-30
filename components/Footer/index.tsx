@@ -2,6 +2,8 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import React, { FC, useState } from 'react'
 import { AboutUsDialog } from '../AboutUsDialog';
+import { ContactsDialog } from '../ContactsDialog';
+import { GuaranteesDialog } from '../GuaranteesDialog';
 
 import styles from './Footer.module.scss';
 
@@ -12,6 +14,9 @@ interface FooterProps {
 
 export const Footer: FC<FooterProps> = ({ }) => {
   const [aboutUs, setAboutUs] = useState(false);
+  const [contacts, setContacts] = useState(false);
+  const [guarantees, setGuarantees] = useState(false);
+
   return (
     <footer className={styles.footer}>
       <div className={clsx(styles.footer__wrapper, "container")}>
@@ -25,17 +30,20 @@ export const Footer: FC<FooterProps> = ({ }) => {
             владельцев.
           </p>
         </div>
+
         <div className={styles.footer__lists}>
           <ul>
             {/* <li><Link href="/"><a>Последние поступления</a></Link></li> */}
-            <li><Link href="/"><a>Контакты</a></Link></li>
+            <ContactsDialog openDialog={contacts} setOpenDialog={setContacts} />
+            <li onClick={() => setContacts(true)}>Контакты</li>
             <AboutUsDialog openDialog={aboutUs} setOpenDialog={setAboutUs} />
             <li onClick={() => setAboutUs(true)}>О проекте</li>
             {/* <li><Link href="/"><a>Другое</a></Link></li> */}
           </ul>
           <ul>
             <li><Link href="/profile"><a>Мои покупки</a></Link></li>
-            <li><Link href="/cart"><a>Гарантии</a></Link></li>
+            <GuaranteesDialog openDialog={guarantees} setOpenDialog={setGuarantees} />
+            <li onClick={() => setGuarantees(true)}>Гарантии</li>
             <li><Link href="/profile"><a>Мой кабинет</a></Link></li>
             {/* <li><Link href="/"><a>Мои возвраты</a></Link></li> */}
           </ul>

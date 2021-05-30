@@ -1,4 +1,4 @@
-import nookies from 'nookies';
+import nookies, { parseCookies } from 'nookies';
 import axios from "../core/axios";
 // import { GetServerSidePropsContext } from "next";
 
@@ -17,7 +17,11 @@ export const PaymentApi = () => {
     },
     popup: async (sum: number): Promise<any> => {
       try {
-        const { data } = await axios.post(`/payment/popup-balance`, { sum });
+        const { data } = await axios.post(`/payment/popup-balance`, { sum }, {
+          headers: {
+            Authorization: 'Bearer ' + parseCookies()?.auth_token,
+          },
+        });
         return data;
       } catch (error) {
         if (error.response) {

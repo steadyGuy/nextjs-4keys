@@ -62,10 +62,10 @@ export const SliderSection = () => {
     <>
       <div className={styles.wrapper} style={{ background: "linear-gradient(0deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.55)), url(./static/home-bg.png)", backgroundSize: "cover" }}>
         <div className={clsx("container", styles.section)}>
-          <div className={styles.sound}>
+          {/* <div className={styles.sound}>
             <img src="./static/sound.svg" alt="Sound icon" />
             <span className="ml-10">Выключить звук</span>
-          </div>
+          </div> */}
           <h1>Лента дропа</h1>
           <p>В ленте отображаются игры полученные <span>реальными</span> клиентами!</p>
           <div className={styles.slider}>

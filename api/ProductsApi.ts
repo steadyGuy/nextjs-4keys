@@ -6,7 +6,7 @@ export const ProductsApi = () => {
   return {
     getProducts: async (loadCount: number, offset = 0, platform = 'all'): Promise<any> => {
       try {
-        let link = `http://4keys.apeps.pp.ua/public/api/`;
+        let link = `https://4keys.apeps.pp.ua/public/api/`;
         if (platform === 'all') {
           link += `products/${offset + 1}/${loadCount + offset}`;
         } else {
@@ -24,7 +24,7 @@ export const ProductsApi = () => {
     },
     getComments: async (id: number): Promise<any> => {
       try {
-        // http://localhost:3000/api
+        // http://localhost:3000
         const { data } = await axios.get(`https://nestjsspecial.herokuapp.com/api/reviews?productId=${id}`);
         return data;
       } catch (error) {
@@ -36,7 +36,7 @@ export const ProductsApi = () => {
     },
     getCurrentProduct: async (slug): Promise<any> => {
       try {
-        const { data } = await axios.get(`http://4keys.apeps.pp.ua/public/api/products/${slug}`);
+        const { data } = await axios.get(`https://4keys.apeps.pp.ua/public/api/products/${slug}`);
         return data;
       } catch (error) {
         if (error.response) {
@@ -48,7 +48,7 @@ export const ProductsApi = () => {
 
     getRandomProducts: async (count): Promise<any> => {
       try {
-        const { data } = await axios.get(`http://4keys.apeps.pp.ua/public/api/random/products/${count}`);
+        const { data } = await axios.get(`https://4keys.apeps.pp.ua/public/api/random/products/${count}`);
         return data;
       } catch (error) {
         if (error.response) {

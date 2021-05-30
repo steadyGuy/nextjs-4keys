@@ -28,7 +28,6 @@ const DetailProduct = ({ product, randomProducts, comments }) => {
 export async function getServerSideProps(ctx) {
   const product = await ProductsApi().getCurrentProduct(ctx.params.slug);
   const randomProducts = await ProductsApi().getRandomProducts(4);
-  console.log(product)
 
   if (!product || !randomProducts) {
     return {
@@ -39,7 +38,7 @@ export async function getServerSideProps(ctx) {
     }
   }
 
-  let comments = await ProductsApi().getComments(product.data.id) || [];
+  const comments = await ProductsApi().getComments(product.data.id) || [];
   return {
     props: { product, randomProducts, comments }, // will be passed to the page component as props
   }

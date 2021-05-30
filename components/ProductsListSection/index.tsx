@@ -20,7 +20,6 @@ export const ProductsListSection: FC<ProductsListSectionProps> = ({ products: pr
     switch (action.type) {
 
       case 'LOAD_PRODUCTS_SUCCESS':
-        console.log('action.payload', action.payload)
         return { ...state, ...action.payload }
 
       case 'LOAD_PRODUCTS_FETCHING':
@@ -67,8 +66,6 @@ export const ProductsListSection: FC<ProductsListSectionProps> = ({ products: pr
   const handleLoadMore = async (destination) => {
     dispatch({ type: 'LOAD_PRODUCTS_FETCHING', payload: { loading: true } });
     const { data } = await ProductsApi().getProducts(8, destination.count, destination.name);
-    console.log('destination.name', destination.name)
-    console.log('dataLARAVEL', data)
     let dataSend = {
       [destination.name]: {
         count: destination.count + 8,
@@ -138,11 +135,9 @@ export const ProductsListSection: FC<ProductsListSectionProps> = ({ products: pr
             </ul>
           </div>
         </div>
-        {console.log('state', state)}
         {
           !state.loading ?
             <>
-              {console.log('productsType().loadedAll', productsType().loadedAll)}
               <Products
                 productsObj={productsType()}
                 handleLoadMore={handleLoadMore}

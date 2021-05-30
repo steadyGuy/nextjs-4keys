@@ -11,9 +11,6 @@ interface IProducts {
 }
 
 export const Products: FC<IProducts> = ({ productsObj, handleLoadMore, typeOfGame }) => {
-
-  console.log('productsObj', productsObj)
-  console.log('typeOfGametypeOfGame', typeOfGame)
   return (
     <>
       <div className={styles.items}>

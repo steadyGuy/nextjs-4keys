@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { UserApi } from '../../api/UserApi';
 import { IComment } from '../../interfaces/Comment';
 import { Button } from '../Button';
@@ -21,9 +21,11 @@ export const Comments = ({ comments: comm, product }) => {
     });
   }
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { comment, message } = await UserApi().comment(e.target.productId.value, e.target.description.value);
+    console.log('productIdproductId', +e.target.productId.value);
+    const { comment, message } = await UserApi().comment(+e.target.productId.value, e.target.description.value);
     if (comment) {
       setComments({ data: [...comments.data, comment as IComment], loaded: comments.loaded + 1 });
     }
