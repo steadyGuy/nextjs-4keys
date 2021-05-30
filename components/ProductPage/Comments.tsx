@@ -78,7 +78,7 @@ export const Comments = ({ comments: comm, product }) => {
               return <Comment
                 id={c.id}
                 description={c.description}
-                userImage={c.userImage}
+                userImage={c.userImage || '/static/profile_img.png'}
                 created_at={c.created_at}
                 userName={c.userName}
                 key={Math.random() + i}
@@ -98,7 +98,8 @@ export const Comments = ({ comments: comm, product }) => {
           <textarea name="description" placeholder="Введите ваш комментария..."></textarea>
           <input type="hidden" name="productId" value={product.id}></input>
           <div className={styles.comments__senderBottom}>
-            <div className="captacha">Captcha</div>
+            {/* Captcha */}
+            <div className="captacha"></div>
             <Button type="filled" typeSend="submit">Отправить</Button>
           </div>
         </form>
