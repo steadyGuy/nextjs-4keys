@@ -23,8 +23,7 @@
 
 .navigation {
   display: flex;
-  opacity: 1;
-  transition: opacity 0.4s ease-in-out;
+  transition: 0.4s;
   > a,
   > span {
     cursor: pointer;
@@ -76,7 +75,6 @@
 
 .navHidden {
   left: -1999px !important;
-  opacity: 0;
 }
 
 @media (max-width: 768px) {
