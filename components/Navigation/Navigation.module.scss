@@ -23,6 +23,7 @@
 
 .navigation {
   display: flex;
+  transition: 0.4s;
   > a,
   > span {
     cursor: pointer;
@@ -76,36 +77,49 @@
   top: 0;
 }
 
+.navHidden {
+  left: -999px !important;
+}
+
 @media (max-width: 768px) {
   .hiddenLg {
     display: block;
   }
   .bordered {
+    top: 0;
+    left: 0;
     position: fixed;
     z-index: 100;
     background-color: #fff;
   }
   .navigation {
-    // top: -9999px;
     position: fixed;
     width: 100%;
     height: 100%;
-    background-color: green;
     left: 0;
     top: 87px;
     flex-direction: column;
     z-index: 100;
+    background-color: $textColor;
     text-align: center;
+    padding-top: 18px;
     > a,
     > span {
+      color: #fff;
       display: block;
       border: none;
       cursor: pointer;
       margin-left: 0;
       font-size: 16px;
+      padding: 12px 0;
       // padding-bottom: 8px;
       // padding-top: 6px;
-      color: $textColor;
+      transition: 0.3s;
+      font-weight: 300;
+      &:hover {
+        border: none;
+        background-color: $primaryColor;
+      }
     }
   }
 }

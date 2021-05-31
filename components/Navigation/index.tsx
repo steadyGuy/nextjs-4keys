@@ -60,7 +60,7 @@ export const Navigation = () => {
         <div className={styles.hiddenLg}>
           <BurgerMenu open={burgerMenuOpen} setOpen={setBurgerMenuOpen} />
         </div>
-        <nav className={styles.navigation}>
+        <nav className={clsx(styles.navigation, !burgerMenuOpen && styles.navHidden)}>
 
           <Link href={'/'}>
             <a>Главная</a>
