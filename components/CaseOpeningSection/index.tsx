@@ -126,6 +126,10 @@ export const CaseOpeningSection: FC<any> = ({ specialItems, items, containerType
         </div>
         {openingInProgress && <UnlockingContainerNotification />}
       </SectionWrapper>
+      <p style={{ textAlign: 'center', marginTop: 18, color: '#ACACAC' }}>
+        Сейчас открытие кейсов в бета-версии. Алгоритм, как и выбор кейсов работает, однако Вы не сможете купить
+        кейс за деньги
+        </p>
     </>
   )
 }

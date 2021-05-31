@@ -131,7 +131,7 @@ export const ReceivedItemModal: FC<ReceivedItemModalProps> = ({ item, onTryAgain
             <div className={`${styles.data__image}`}>
               <img src={item.image} alt='Полученая игра' />
             </div>
-            <h4 className={styles.data__key}>Ваш ключ: <span>{item.key}</span></h4>
+            <h4 className={styles.data__key}>Ваш ключ: <span>{item.key} - без ключа</span></h4>
             <Button type="filled" className={styles.data__btn} clickHandler={tryAgainClose} >Продолжить</Button>
             {/* или */}
             <span className={styles.data__delim} style={{ marginBottom: 48 }}></span>
