@@ -24,7 +24,6 @@ export const Comments = ({ comments: comm, product }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('productIdproductId', +e.target.productId.value);
     const { comment, message } = await UserApi().comment(+e.target.productId.value, e.target.description.value);
     if (comment) {
       setComments({ data: [...comments.data, comment as IComment], loaded: comments.loaded + 1 });

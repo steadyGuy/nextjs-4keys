@@ -1,5 +1,7 @@
 import clsx from 'clsx';
-import React, { FC } from 'react'
+import React, { FC, useContext } from 'react'
+import { CHOOSE_CASE } from '../../store/actions';
+import { StoreContext } from '../../store/GlobalState';
 
 import styles from './Switch.module.scss';
 
@@ -20,8 +22,19 @@ interface SwitchProps {
 }
 
 export const Switch: FC<SwitchProps> = ({ className, theme, label, noText = false, large = false }) => {
+  const { state, dispatch } = useContext(StoreContext);
+
   let switchClass = className;
   let id = toCamelCase(label);
+
+  const handleSwitcher = (e) => {
+    let checked = state.choosenCase.id === 0 ? true : false;
+    if (checked) {
+      dispatch({ type: CHOOSE_CASE, payload: { id: 1, price: 50 } });
+    } else {
+      dispatch({ type: CHOOSE_CASE, payload: { id: 0, price: 0 } });
+    }
+  }
 
   return (
     <div
@@ -33,7 +46,7 @@ export const Switch: FC<SwitchProps> = ({ className, theme, label, noText = fals
       )}
     >
       <label className={styles.switch__label} htmlFor={id}>
-        <input role="switch" type="checkbox" className={styles.switch__input} id={id} />
+        <input onChange={handleSwitcher} role="switch" type="checkbox" className={styles.switch__input} checked={state.choosenCase.id === 0} id={id} />
         <span className={styles.switch__text} data-on="ON" data-off="OFF"></span>
         <span className={styles.switch__handle}></span>
       </label>

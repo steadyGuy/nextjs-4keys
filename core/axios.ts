@@ -1,8 +1,8 @@
 import Axios from 'axios';
 import { parseCookies } from 'nookies';
 const instance = Axios.create({
-  // http://localhost:3000/
-  baseURL: 'https://nestjsspecial.herokuapp.com/api',
+  // http://localhost:3000
+  baseURL: 'https://nestjsspecial.herokuapp.com//api',
   headers: {
     Authorization: 'Bearer ' + parseCookies()?.auth_token,
   }

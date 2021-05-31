@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
+import { CasesApi } from '../api/CasesApi';
 import { ProductsApi } from '../api/ProductsApi';
 import { Advantages } from '../components/Advantages';
 import { CaseOpeningSection } from '../components/CaseOpeningSection';
@@ -11,7 +12,7 @@ import { SettingsContextProvider } from '../contexts/SettingsContext';
 import { containerTypes } from "../helpers";
 import { Cases } from '../public/cases';
 
-export default function Home({ products }) {
+export default function Home({ products, orderedCasesItems, cases, casesItems }) {
 
   const [chosenContainerType, setChosenContainerType] = useState(containerTypes[0]);
   const [containerInfo, setContainerInfo] = useState({
@@ -22,15 +23,24 @@ export default function Home({ products }) {
   const [specialItems, setSpecialItems] = useState(null);
 
   useEffect(() => {
-    const { title, image, items, specialItems } = Cases.find(
-      (value) => value.id === 1 // +router.query.id
-    );
+    // const { title, image, items, specialItems } = Cases.find(
+    //   (value) => value.id === 1 // +router.query.id
+    // );
+
+
+
     setContainerInfo({
-      title,
-      image,
+      title: 'title',
+      image: 'image',
     });
-    setItems(items);
-    setSpecialItems(specialItems);
+    let newItems = casesItems.map(item => {
+      return {
+        id: item.id, title: item.title, image: item.photo, type: item.case, key: 'none'
+      }
+    });
+    console.log(newItems)
+    setItems(newItems);
+    setSpecialItems(newItems.filter((item) => item.type === 3));
   }, [])
 
   return (
@@ -50,13 +60,14 @@ export default function Home({ products }) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SliderSection />
+      <SliderSection orders={orderedCasesItems} />
       <Advantages />
       <SettingsContextProvider>
         {chosenContainerType === containerTypes[0] &&
           items &&
           specialItems && (
             <CaseOpeningSection
+              id="cases_open_section"
               items={items}
               containerType={containerTypes[0]}
               caseTitle={containerInfo.title}
@@ -65,7 +76,7 @@ export default function Home({ products }) {
             />
           )}
       </SettingsContextProvider>
-      <CasesListSection />
+      <CasesListSection cases={cases} />
       <ProductsListSection products={products} />
     </>
   );
@@ -73,14 +84,32 @@ export default function Home({ products }) {
 
 export async function getServerSideProps() {
   const products = await ProductsApi().getProducts(12);
+  const cases = await CasesApi().getAll();
+  const orderedCasesItems = await CasesApi().getCasesOrders();
+
+  const casesItems = await CasesApi().getAllCasesItems() || [];
+  let free = {
+    id: 0,
+    title: 'Бесплатный ключ',
+    price: 0,
+    created_at: new Date().toString(),
+  };
+
+  cases.unshift(free);
 
   if (!products?.data) {
     return {
-      props: { products: { data: [] } }, // will be passed to the page component as props
+      props: { products: { data: [] }, cases }, // will be passed to the page component as props
+    }
+  }
+
+  if (!cases || !orderedCasesItems) {
+    return {
+      props: { products, cases, orderedCasesItems }, // will be passed to the page component as props
     }
   }
 
   return {
-    props: { products }, // will be passed to the page component as props
+    props: { products, cases, orderedCasesItems, casesItems }, // will be passed to the page component as props
   }
 }

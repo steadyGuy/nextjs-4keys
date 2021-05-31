@@ -1,13 +1,17 @@
-import React from 'react'
+import React, { FC } from 'react'
 import Link from 'next/link'
 import Slider from 'react-slick';
 import clsx from 'clsx';
 
 import styles from "./Slider.module.scss";
-import tabTheme from './MyTabTheme.scss'
 import { ProductItem } from '../ProductItem';
+import { IHomePageOrder } from '../../interfaces/HomePageOrder'
 
-export const SliderSection = () => {
+interface SliderSectionProps {
+  orders: IHomePageOrder[];
+}
+
+export const SliderSection: FC<SliderSectionProps> = ({ orders }) => {
 
   const settings = {
     customPaging: (i) => {
@@ -70,13 +74,16 @@ export const SliderSection = () => {
           <p>В ленте отображаются игры полученные <span>реальными</span> клиентами!</p>
           <div className={styles.slider}>
             <Slider  {...settings}>
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
-              <ProductItem className={styles.indent} />
+              {orders.map(order => (
+                <ProductItem
+                  date={order.created_at}
+                  title={order.title}
+                  photo={order.photo}
+                  key={order.id}
+                  slug={order.slug}
+                  className={styles.indent}
+                />
+              ))}
             </Slider>
             <style global jsx>{`
                 .slick-dots {

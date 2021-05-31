@@ -47,7 +47,7 @@ export const Item = ({ type, inventoryStyles, weapon, showSkinTitle, skin, image
       onMouseOver={() => setModalInfoVisible(true)}
       onMouseLeave={() => setModalInfoVisible(false)}
       className={clsx(styles.item, inventoryStyles, styles.item_inInventory)}
-      style={{ background: "url(./static/items/example.png)", backgroundSize: "cover" }}
+      style={{ background: `url(${image})`, backgroundSize: "cover" }}
     >
       {modalInfoVisible && withModalInfo && (
         <div className={styles.modalInfo}>

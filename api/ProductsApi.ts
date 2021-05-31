@@ -12,7 +12,6 @@ export const ProductsApi = () => {
         } else {
           link += `${platform}/products/${offset + 1}/${loadCount + offset}`;
         }
-        console.log('link', link)
         const { data } = await axios.get(link);
         return data;
       } catch (error) {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./CaseOpeningConfirmation.module.scss";
 import { Item } from "../Item";
 // import { GreenButton } from "../GreenButton/GreenButton";
@@ -9,12 +9,15 @@ import { getItemFromCaseByType, IGameItem } from "../CaseOpeningSection/RandomIt
 import { Cases } from "../../public/cases.js";
 import { Knives } from "../../public/knives.js";
 import { Button } from '../Button';
+import { StoreContext } from '../../store/GlobalState';
 
-export const CaseOpeningConfirmation = ({ onSubmit }) => {
+export const CaseOpeningConfirmation = ({ onSubmit, items, specialItems }) => {
 
+  const { state, dispatch } = useContext(StoreContext);
+  console.log('itemsitems', items)
   const getRandomItem = () => {
     const type = getRandomType();
-    const item = getItemFromCaseByType(Cases[0].items, Knives[1].items, type);
+    const item = getItemFromCaseByType(items, specialItems, type);
     return item;
   };
 
@@ -36,7 +39,7 @@ export const CaseOpeningConfirmation = ({ onSubmit }) => {
         clickHandler={handleOnSubmit}
         className="m-auto mt-25"
       >
-        Открыть 49.99₽
+        Открыть {state.choosenCase.price} ₽
         </Button>
     </div>
   );

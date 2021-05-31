@@ -1,10 +1,12 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useState } from 'react'
 import { PaymentApi } from '../../api/PaymentApi';
 import { UserApi } from '../../api/UserApi';
 import { IComment } from '../../interfaces/Comment';
+import { UPDATE_BALANCE, UPDATE_BALANCE_MINUSE } from '../../store/actions';
+import { StoreContext } from '../../store/GlobalState';
 import { Button } from '../Button';
 import { Dialog } from '../Dialog';
 import { EmailInput } from '../EmailInput';
@@ -30,6 +32,7 @@ export const ProductPage: FC<ProductPageProps> = ({ randomProducts, product, com
   const [readyToPay, setReadyToPay] = useState(false);
   const [openInformal, setOpenInformal] = useState(false);
   const [informalMessage, setInformalMessage] = useState('');
+  const { state, dispatch } = useContext(StoreContext)
 
   const handleOnOpenDialog = () => {
     setOpenDialog(!openDialog);
@@ -61,7 +64,6 @@ export const ProductPage: FC<ProductPageProps> = ({ randomProducts, product, com
 
   const handleInformalMessage = () => {
     setOpenInformal(false);
-    router.reload();
   }
 
   const handlePayment = async () => {
@@ -73,9 +75,11 @@ export const ProductPage: FC<ProductPageProps> = ({ randomProducts, product, com
     }
     setReadyToPay(false);
     setOpenInformal(true);
-    let userLocalS = JSON.parse(localStorage.getItem('user'));
-    userLocalS.balance = await UserApi().getBalance();
-    localStorage.setItem('user', JSON.stringify(userLocalS));
+    // let userLocalS = JSON.parse(localStorage.getItem('user'));
+    // userLocalS.balance = await UserApi().getBalance();
+    // localStorage.setItem('user', JSON.stringify(userLocalS));
+    const balance = await UserApi().getBalance();
+    dispatch({ type: UPDATE_BALANCE_MINUSE, payload: balance });
     setInformalMessage(data.message);
   }
 

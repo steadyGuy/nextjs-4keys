@@ -24,6 +24,16 @@ export const rootReducer = (state, action) => {
       localStorage.setItem('user', JSON.stringify(user));
       return { ...state, auth: { ...user } };
 
+    case actionType.UPDATE_BALANCE_MINUSE:
+      const userr = JSON.parse(localStorage.getItem('user'));
+      userr.balance = action.payload;
+      localStorage.setItem('user', JSON.stringify(userr));
+      return { ...state, auth: { ...userr } };
+
+    case actionType.CHOOSE_CASE:
+      return { ...state, choosenCase: action.payload }
+
+
     default:
       return state;
   }

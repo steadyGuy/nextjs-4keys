@@ -20,7 +20,7 @@ import { SectionWrapper } from '../SectionWrapper';
 
 // }
 
-export const CaseOpeningSection: FC<any> = ({ specialItems, items, containerType = containerTypes[0], caseImage, caseTitle }) => {
+export const CaseOpeningSection: FC<any> = ({ specialItems, items, containerType = containerTypes[0], caseImage, caseTitle, id }) => {
   const router = useRouter();
   const { volume, caseOpeningTime } = useContext(SettingsContext);
   const [lineOfItems, setLine] = useState(null);
@@ -93,7 +93,7 @@ export const CaseOpeningSection: FC<any> = ({ specialItems, items, containerType
 
   return (
     <>
-      <SectionWrapper title="Ваша игра" className={clsx(styles.caseOpeningSection, "container")}>
+      <SectionWrapper title="Ваша игра" className={clsx(styles.caseOpeningSection, "container")} id={id}>
         {/* {openingInProgress && <CaseOpeningAudio />} */}
         <div className={styles.demo}>
           <b>Demo-режим</b>
@@ -111,7 +111,7 @@ export const CaseOpeningSection: FC<any> = ({ specialItems, items, containerType
         <div className={styles.caseOpeningSection__headWrap}>
           {!openingInProgress && (
             <CaseOpeningConfirmation
-              items specialItems type
+              items={items} specialItems={specialItems} type
               onSubmit={() => openCase()}
             />
           )}

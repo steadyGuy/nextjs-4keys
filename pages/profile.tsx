@@ -4,7 +4,6 @@ import { ProfilePage } from '../components/ProfilePage';
 import { UserApi } from '../api/UserApi';
 
 const MyProfile = ({ user, orders }) => {
-  console.log('useruseruseruseruseruseruseruseruseruser', user)
   return (
     <div>
       <Head>
@@ -19,8 +18,6 @@ export async function getServerSideProps(ctx) {
 
   const user = await UserApi().getMe(ctx);
   const orders = await UserApi().orders(ctx);
-  console.log('orders', orders)
-  console.log('useruseruser', user)
   if (!user) {
     return {
       redirect: {
