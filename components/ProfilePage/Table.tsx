@@ -9,7 +9,7 @@ export const Table = ({ orders }) => {
     if (type === 'key') {
       return order.key;
     }
-    return `Login: ${order.account.email}; Pass: ${order.account.password_hash}`;
+    return `Login: ${order.account.email}; Pass: ${order.account.platform_password}`;
   }
 
   return (
