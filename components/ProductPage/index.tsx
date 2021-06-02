@@ -81,6 +81,7 @@ export const ProductPage: FC<ProductPageProps> = ({ randomProducts, product, com
     const balance = await UserApi().getBalance();
     dispatch({ type: UPDATE_BALANCE_MINUSE, payload: balance });
     setInformalMessage(data.message);
+    router.push('/profile');
   }
 
   return (
